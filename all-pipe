@@ -1,68 +1,69 @@
-pipleline{
+pipeline {
     agent any
     environment {
-        s= "10"
-        y= "hello"
+        s = "10"
+        y = "hello"
     }
     parameters {
-        t="15"
-        z="20"
+        string(name: 't', defaultValue: '15')
+        string(name: 'z', defaultValue: '20')
     }
     stages {
-       stage ("git"){
-         steps{
-         git branch: "main", url: "https://github.com/ganesh-redy/all-pipe.git"
-         }
-       }
-        stage ("one"){
-            parallel (
-                stage("p1"){
-                    steps{
+        stage("git") {
+            steps {
+                git branch: "main", url: "https://github.com/ganesh-redy/all-pipe.git"
+            }
+        }
+        stage("one") {
+            parallel {
+                stage("p1") {
+                    steps {
                         echo 'p1'
                     }
-                },
-                stages("p2"){
+                }
+                stage("p2") {
                     steps {
                         echo 'p2'
                     }
                 }
-            )
-        }
-        stage ("two"){
-            when {
-                environment name : "s" value: "10"
             }
-
-        steps{
-            echo "when"
         }
-        }
-        stage ("three"){
+        stage("two") {
             when {
-                anyOf{
-                    environment name : "y", value : "hello"
-                    environment name : "s", value :"okay" 
+                environment name: "s", value: "10"
+            }
+            steps {
+                echo "when"
+            }
+        }
+        stage("three") {
+            when {
+                anyOf {
+                    environment name: "y", value: "hello"
+                    environment name: "s", value: "okay"
                 }
             }
             steps {
-                echo "value -${s}"
+                echo "value - ${env.s}"
             }
         }
-        stage ("if"){
-            script {
-                if ( params.t == "15"){
-                    echo 'jam'
-                }
-                else{
-                    echo 'not jam'
-                }
-                if (env.s == "10"){
-                    echo "s= ${env.s}"
-                }
-                else{
-                    echo "t = ${params.t}"
+        stage("if") {
+            steps {
+                script {
+                    if (params.t == "15") {
+                        echo 'jam'
+                    } else {
+                        echo 'not jam'
+                    }
+
+                    if (env.s == "10") {
+                        echo "s= ${env.s}"
+                    } else {
+                        echo "t = ${params.t}"
+                    }
                 }
             }
         }
     }
 }
+
