@@ -1,0 +1,63 @@
+pipleline{
+    agent any
+    environment {
+        s= "10"
+        y= "hello"
+    }
+    parameters {
+        t="15"
+        z="20"
+    }
+    stages {
+        stage ("one"){
+            parallel (
+                stage("p1"){
+                    steps{
+                        echo 'p1'
+                    }
+                },
+                stages("p2"){
+                    steps {
+                        echo 'p2'
+                    }
+                }
+            )
+        }
+        stage ("two"){
+            when {
+                environment name : "s" value: "10"
+            }
+
+        steps{
+            echo "when"
+        }
+        }
+        stage ("three"){
+            when {
+                anyOf{
+                    environment name : "y", value : "hello"
+                    environment name : "s", value :"okay" 
+                }
+            }
+            steps {
+                echo "value -${s}"
+            }
+        }
+        stage ("if"){
+            script {
+                if ( params.t == "15"){
+                    echo 'jam'
+                }
+                else{
+                    echo 'not jam'
+                }
+                if (env.s == "10"){
+                    echo "s= ${env.s}"
+                }
+                else{
+                    echo "t = ${params.t}"
+                }
+            }
+        }
+    }
+}
