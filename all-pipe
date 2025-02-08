@@ -9,6 +9,11 @@ pipleline{
         z="20"
     }
     stages {
+       stage ("git"){
+         steps{
+           git branch 'main' url : 'https://github.com/ganesh-redy/all-pipe/edit/main/all-pipe'
+         }
+       }
         stage ("one"){
             parallel (
                 stage("p1"){
