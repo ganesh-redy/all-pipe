@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_all_pipe_1746452164116-push-trigger-input-set
+  identifier: Build_all_pipe_1746452164116pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: SFTY_Training
+  pipeline:
+    identifier: Build_all_pipe_1746452164116
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
