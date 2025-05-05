@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_all_pipe_1746452164116-pr-trigger-input-set
+  identifier: Build_all_pipe_1746452164116prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: SFTY_Training
+  pipeline:
+    identifier: Build_all_pipe_1746452164116
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
