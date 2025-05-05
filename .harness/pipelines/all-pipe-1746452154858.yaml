@@ -1,0 +1,35 @@
+pipeline:
+  identifier: Build_all_pipe_1746452164116
+  name: Build all-pipe
+  orgIdentifier: default
+  projectIdentifier: SFTY_Training
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: githubganesh
+        repoName: all-pipe
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          caching:
+            enabled: true
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  identifier: echo
+                  name: echo
+                  spec:
+                    command: echo hello world
+                  timeout: ""
+                  type: Run
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
